@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NAV_LINKS } from "@/lib/data";
 import { EASE } from "@/lib/anim";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { Magnetic } from "@/components/magnetic";
 
 /**
@@ -60,8 +59,10 @@ export function Header() {
         </nav>
 
         {/* Right actions */}
-        <div className="flex items-center gap-3">
-          <ThemeToggle />
+        <div className="flex items-center gap-4">
+          <span className="hidden font-mono text-[10px] uppercase tracking-[0.25em] text-muted lg:inline">
+            NGR · Remote
+          </span>
           <Magnetic className="hidden sm:block">
             <a
               href="#contact"

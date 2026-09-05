@@ -1,36 +1,15 @@
 @import "tailwindcss";
 
 /*
-  Class-based dark mode for Tailwind v4 — the `.dark` class on <html>
-  drives all `dark:` styles below (set from localStorage via ThemeInit).
+  DESIGN TOKENS — single light / white theme.
+  Warm editorial cream background with a deep-charcoal accent.
 */
-@custom-variant dark (&:where(.dark, .dark *));
-
-/*
-  DESIGN TOKENS
-  Dark = neo-brutalist monochrome (#0D0D0D) with an acid-lime accent.
-  Light = warm editorial cream (#F4F3EE) with a deep-charcoal accent.
-*/
-:root,
-.dark {
-  --background: #0d0d0d;
-  --foreground: #f2f1ec;
-  --surface: #151514;
-  --surface-2: #1c1c1a;
-  --card: #111110;
-  --line: rgba(242, 241, 236, 0.14);
-  --line-soft: rgba(242, 241, 236, 0.08);
-  --muted: #92928a;
-  --accent: #d8ff3e;
-  --accent-ink: #0d0d0d;
-}
-
-.light {
-  --background: #f4f3ee;
+:root {
+  --background: #ffffff;
   --foreground: #131311;
-  --surface: #ecebe4;
+  --surface: #f2f1ec;
   --surface-2: #e4e3da;
-  --card: #eeece5;
+  --card: #fafaf7;
   --line: rgba(19, 19, 17, 0.16);
   --line-soft: rgba(19, 19, 17, 0.08);
   --muted: #6e6e67;
@@ -50,7 +29,7 @@
   --color-muted: var(--muted);
   --color-accent: var(--accent);
   --color-accent-ink: var(--accent-ink);
-  --font-display: var(--font-syne), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
