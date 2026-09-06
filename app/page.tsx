@@ -1,9 +1,7 @@
 import { Hero } from "@/components/hero";
 import { About } from "@/components/about";
 import { Experience } from "@/components/experience";
-import { Promo } from "@/components/promo";
 import { Portfolio } from "@/components/portfolio";
-import { Insights } from "@/components/insights";
 import { Footer } from "@/components/footer";
 import Carousel from "@/components/carousel";
 
@@ -14,9 +12,7 @@ export default function Home() {
       <About />
       <Carousel />
       <Experience />
-      {/* <Promo /> */}
       <Portfolio />
-      {/* <Insights /> */}
       <Footer />
     </div>
   );
