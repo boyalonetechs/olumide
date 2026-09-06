@@ -1,7 +1,12 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  AnimatePresence,
+  motion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import { X } from "lucide-react";
 
 /**
@@ -15,18 +20,17 @@ const SLIDES = [
     src: "/dashboard-preview.jpg",
     alt: "Olumide Faleye - Data Analyst",
   },
+  { src: "/IMG-20260716-WA0020.jpg", alt: "Sales Performance Overview" },
+  { src: "/IMG-20260716-WA0017.jpg", alt: "Google Sheets Automation" },
+  { src: "/IMG-20260716-WA0019.jpg", alt: "Payment & Revenue Analysis" },
+  { src: "/IMG-20260716-WA0021.jpg", alt: "Financial Insights Dashboard" },
+  { src: "/IMG-20260716-WA0024.jpg", alt: "Business Performance Dashboard" },
   { src: "/IMG-20260716-WA0012.jpg", alt: "Sales Pipeline Dashboard" },
   { src: "/IMG-20260716-WA0026.jpg", alt: "Customer & Revenue Insights" },
   { src: "/IMG-20260716-WA0013.jpg", alt: "Bank Loan Analysis" },
-  { src: "/IMG-20260716-WA0016.jpg", alt: "Uber Trip Analysis" },
-  { src: "/dashboard-preview.jpg", alt: "Retail Analytics" },
-  { src: "/IMG-20260716-WA0017.jpg", alt: "Google Sheets Automation" },
-  { src: "/IMG-20260716-WA0018.jpg", alt: "Customer Churn & LTV" },
-  { src: "/IMG-20260716-WA0019.jpg", alt: "Payment & Revenue Analysis" },
-  { src: "/IMG-20260716-WA0020.jpg", alt: "Sales Performance Overview" },
-  { src: "/IMG-20260716-WA0021.jpg", alt: "Financial Insights Dashboard" },
   { src: "/IMG-20260716-WA0023.jpg", alt: "Operations Analytics" },
-  { src: "/IMG-20260716-WA0024.jpg", alt: "Business Performance Dashboard" },
+  { src: "/IMG-20260716-WA0016.jpg", alt: "Uber Trip Analysis" },
+  { src: "/IMG-20260716-WA0018.jpg", alt: "Customer Churn & LTV" },
   { src: "/IMG-20260716-WA0025.jpg", alt: "Executive Overview" },
 ];
 
@@ -34,6 +38,7 @@ export default function Carousel() {
   const sectionRef = useRef<HTMLElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const [activeImg, setActiveImg] = useState<number | null>(null);
+  const [sectionHeight, setSectionHeight] = useState(300);
 
   /* Vertical scroll through the tall section drives the horizontal slide */
   const { scrollYProgress } = useScroll({
@@ -47,6 +52,25 @@ export default function Carousel() {
     const distance = Math.max(0, card.scrollWidth - card.clientWidth);
     return -progress * distance;
   });
+
+  /* Size the section so its scrollable distance matches the horizontal
+     strip distance exactly (1px vertical = 1px horizontal). That way every
+     slide is revealed one by one instead of being raced past. */
+  useLayoutEffect(() => {
+    const measure = () => {
+      const card = cardRef.current;
+      if (!card) return;
+      const distance = Math.max(0, card.scrollWidth - card.clientWidth);
+      setSectionHeight(Math.max(300, distance + window.innerHeight));
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    const timer = window.setTimeout(measure, 500);
+    return () => {
+      window.removeEventListener("resize", measure);
+      window.clearTimeout(timer);
+    };
+  }, []);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -78,7 +102,8 @@ export default function Carousel() {
             {/* Bio & CTA Right */}
             <div className="flex h-full flex-col justify-between pt-2 md:col-span-4 lg:col-span-4">
               <p className="mb-8 text-base leading-relaxed text-gray-600 md:text-lg">
-                Transforming complex, raw datasets into actionable insights and strategic decisions that drive global business growth.
+                Transforming complex, raw datasets into actionable insights and
+                strategic decisions that drive global business growth.
               </p>
               <div>
                 <button className="flex items-center gap-3 rounded-full bg-black px-8 py-4 text-base font-medium text-white shadow-sm transition hover:bg-gray-800">
@@ -93,14 +118,17 @@ export default function Carousel() {
         <section
           ref={sectionRef}
           className="relative"
-          style={{ height: `${Math.max(300, SLIDES.length * 32)}vh` }}
+          style={{ height: sectionHeight }}
         >
           <div className="sticky top-8 xl:top-16 2xl:top-20 pt-1">
             <div
               ref={cardRef}
               className="relative h-[500px] w-full md:h-[650px]"
             >
-              <motion.div style={{ x }} className="flex lg:h-140 xl:h-full  items-stretch lg:gap-30 xl:gap-50 2xl:gap-100">
+              <motion.div
+                style={{ x }}
+                className="flex lg:h-140 xl:h-full  items-stretch lg:gap-30 xl:gap-50 2xl:gap-100"
+              >
                 {SLIDES.map((slide, i) => (
                   <button
                     key={`${slide.src}-${i}`}
