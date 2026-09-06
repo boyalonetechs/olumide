@@ -1,131 +1,95 @@
-"use client";
-
-import { Reveal } from "@/components/reveal";
-
-const EXPERTISE = [
-  "Sales & Revenue Analytics",
-  "Financial Analytics",
-  "E-commerce Analytics",
-  "Operations Analytics",
-  "Customer Analytics",
-  "Business Intelligence",
-  "Data Visualization",
-  "Dashboard Development",
-  "Data Storytelling",
-  "Process Automation",
-];
+import { Globe, ArrowUpRight, Sparkles } from "lucide-react";
+import { Avatar } from "@/components/avatar";
 
 /**
- * About — asymmetric editorial layout. Sticky index/label on the left,
- * oversized story heading + long-form bio on the right, expertise grid
- * and the personal mission statement as a highlight quote card.
+ * About — asymmetric editorial grid: left title+arrow, a tall white card
+ * with globe metric + portrait, and a right column with avatar + feature
+ * bullets using Sparkles chips.
  */
 export function About() {
   return (
-    <section id="about" className="scroll-mt-24 border-b border-line">
-      <div className="shell grid gap-12 py-24 md:py-32 lg:grid-cols-12">
-        {/* Sticky section label */}
-        <div className="lg:col-span-4">
-          <div className="lg:sticky lg:top-28">
-            <Reveal>
-              <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted">
-                <span className="text-accent">01</span> / About
-              </p>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <h2 className="mt-6 font-display text-4xl font-extrabold uppercase leading-[0.95] tracking-tight md:text-5xl">
-                The story
-                <br />
-                behind <span className="text-outline">the data</span>
-              </h2>
-            </Reveal>
-            <Reveal delay={0.18}>
-              <div className="mt-8 flex flex-wrap gap-2">
-                {["Data Analyst", "Consultant", "BI Analyst", "Trainer"].map((r) => (
-                  <span
-                    key={r}
-                    className="rounded-full border border-line px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-muted"
-                  >
-                    {r}
-                  </span>
-                ))}
-              </div>
-            </Reveal>
+    <section id="about" className="relative mx-auto max-w-7xl px-6 py-24 md:px-16 md:py-28">
+      <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-12">
+        {/* LEFT: title + paragraph + decorative arrow */}
+        <div className="flex flex-col justify-between pt-2 lg:col-span-4">
+          <div className="max-w-sm space-y-6">
+            <h2 className="text-4xl font-normal tracking-tight text-zinc-900 md:text-5xl">
+              About Me
+            </h2>
+            <p className="text-sm font-normal leading-relaxed text-zinc-500">
+              I&apos;m Olumide Faleye, a Data Analyst passionate about helping businesses
+              transform data into smarter decisions. With a background in Physics,
+              I&apos;ve always been fascinated by patterns and solving complex problems.
+            </p>
+          </div>
+
+          {/* Curved arrow graphic */}
+          <div className="hidden pl-8 pt-12 opacity-20 lg:block">
+            <svg width="180" height="180" viewBox="0 0 200 200" fill="none" stroke="currentColor" className="text-zinc-600">
+              <path d="M 30,170 C 50,110 110,60 170,80" strokeWidth="3" strokeLinecap="round" />
+              <path d="M 145,65 L 175,80 L 160,110" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </div>
         </div>
 
-        {/* Editorial content */}
-        <div className="lg:col-span-8">
-          <Reveal>
-            <p className="max-w-2xl text-xl leading-relaxed text-muted md:text-2xl">
-              I&apos;m <span className="text-foreground">Olumide Faleye</span>, a Data
-              Analyst and Data Consultant passionate about helping businesses transform
-              data into smarter decisions.
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.1}>
-            <div className="mt-8 grid gap-6 border-l border-line pl-6 text-base leading-relaxed text-muted md:grid-cols-2 md:gap-8">
-              <p>
-                My background is Physics — so patterns, critical thinking, and complex
-                problems are second nature. That curiosity led me into data analytics,
-                where analytical thinking meets business strategy to improve performance
-                and uncover growth opportunities.
-              </p>
-              <p>
-                I specialize in sales, e-commerce, finance, customer behavior, and
-                operations — building interactive dashboards and reports that help
-                decision-makers see exactly what&apos;s happening and what to do next.
+        {/* MIDDLE: tall white card — globe metric + portrait */}
+        <div className="flex flex-col justify-between space-y-8 rounded-3xl border border-zinc-100 bg-white p-8 shadow-sm lg:col-span-4">
+          <div className="space-y-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full border border-zinc-200 bg-zinc-100">
+              <Globe className="h-5 w-5 text-zinc-800" strokeWidth={1.5} />
+            </div>
+            <div>
+              <div className="text-5xl font-normal tracking-tight text-zinc-900">120%</div>
+              <p className="mt-3 max-w-[220px] text-xs leading-relaxed text-zinc-500">
+                Average increase in data-driven insights and operational efficiency
               </p>
             </div>
-          </Reveal>
+          </div>
 
-          {/* Expertise grid */}
-          <Reveal delay={0.16}>
-            <div className="mt-12">
-              <p className="mb-5 font-mono text-[11px] uppercase tracking-[0.3em] text-muted">
-                — Expertise
-              </p>
-              <div className="grid grid-cols-1 border-l border-line sm:grid-cols-2">
-                {EXPERTISE.map((item, i) => (
-                  <div
-                    key={item}
-                    className="flex items-center gap-3 border-b border-line py-3.5 pr-4 sm:odd:pr-8"
-                  >
-                    <span className="font-mono text-[10px] text-accent">
-                      /{String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="text-sm font-medium">{item}</span>
-                  </div>
-                ))}
+          {/* Portrait at bottom of card */}
+          <Avatar
+            src="/hero.jpg"
+            alt="Olumide portrait"
+            className="aspect-square w-full rounded-2xl bg-zinc-100"
+          />
+        </div>
+
+        {/* RIGHT: avatar + sparkles bullets */}
+        <div className="flex flex-col justify-between space-y-8 pt-2 lg:col-span-4">
+          {/* Top-right square avatar with overlay circle button */}
+          <div className="flex justify-start lg:justify-end">
+            <div className="group relative h-36 w-36 cursor-pointer overflow-hidden rounded-2xl shadow-sm">
+              <Avatar src="/background.jpg" alt="Olumide square portrait" className="h-full w-full" />
+              <div className="absolute inset-0 flex items-center justify-center bg-black/10">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-black shadow-md backdrop-blur-sm transition group-hover:scale-110">
+                  <ArrowUpRight className="h-4 w-4" strokeWidth={2.5} />
+                </div>
               </div>
             </div>
-          </Reveal>
+          </div>
 
-          {/* Mission quote */}
-          <Reveal delay={0.1}>
-            <figure className="relative mt-14 overflow-hidden rounded-3xl border border-line bg-card p-8 md:p-12">
-              <div aria-hidden className="absolute inset-0 bg-grid opacity-[0.25] [background-size:40px_40px]" />
-              <blockquote className="relative max-w-2xl font-display text-2xl font-bold leading-snug tracking-tight md:text-[2rem]">
-                “Data is more than numbers — it tells the story of a business. My role is
-                to uncover that story and turn it into decisions that drive growth.”
-              </blockquote>
-              <figcaption className="relative mt-6 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.25em] text-muted">
-                <span className="h-px w-8 bg-accent" />
-                Olumide Faleye — Founder, Mides Analytics
-              </figcaption>
-            </figure>
-          </Reveal>
-
-          <Reveal delay={0.08}>
-            <p className="mt-8 text-base leading-relaxed text-muted">
-              Beyond consulting, I&apos;m deeply committed to education. Through{" "}
-              <span className="text-foreground">Mides Analytics</span> I train students,
-              professionals, and organizations in Data Analytics and Digital Literacy —
-              helping people build practical skills that create real career and business
-              opportunities.
-            </p>
-          </Reveal>
+          {/* Feature bullets */}
+          <div className="max-w-md space-y-6">
+            <div className="flex items-start gap-4">
+              <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-black text-white">
+                <Sparkles className="h-3.5 w-3.5 fill-white" />
+              </div>
+              <p className="pt-1 text-xs leading-relaxed text-zinc-500">
+                I specialize in analyzing data across sales, e-commerce, finance, customer
+                behavior, and operations — combining analytical thinking with business
+                strategy.
+              </p>
+            </div>
+            <div className="flex items-start gap-4">
+              <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-black text-white">
+                <Sparkles className="h-3.5 w-3.5 fill-white" />
+              </div>
+              <p className="pt-1 text-xs leading-relaxed text-zinc-500">
+                My mission: helping individuals and businesses make confident, data-driven
+                decisions that improve efficiency, profitability, and sustainable growth.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

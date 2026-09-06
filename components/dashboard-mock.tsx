@@ -9,6 +9,7 @@ interface DashboardMockProps {
   variant: ChartVariant;
   title?: string;
   className?: string;
+  chartClassName?: string;
 }
 
 const BARS = [38, 62, 46, 80, 58, 92, 70, 100, 74, 88, 64, 96];
@@ -18,7 +19,7 @@ const BARS = [38, 62, 46, 80, 58, 92, 70, 100, 74, 88, 64, 96];
  * analyst work without relying on stock screenshots. Every panel shares
  * the same browser chrome + hairline grid for a cohesive Dribbble look.
  */
-export function DashboardMock({ variant, title, className }: DashboardMockProps) {
+export function DashboardMock({ variant, title, className, chartClassName }: DashboardMockProps) {
   return (
     <div
       className={`overflow-hidden rounded-2xl border border-line bg-card ${className ?? ""}`}
@@ -41,7 +42,7 @@ export function DashboardMock({ variant, title, className }: DashboardMockProps)
 
       <div className="relative bg-grid p-4 [background-size:44px_44px]">
         {/* Chart body, sized small inside the desktop card */}
-        <div className="h-40 sm:h-48">
+        <div className={chartClassName ?? "h-40 sm:h-48"}>
           {variant === "trend" && <TrendChart />}
           {variant === "donut" && <DonutChart />}
           {variant === "bars" && <BarsChart />}

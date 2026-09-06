@@ -1,147 +1,79 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Reveal } from "@/components/reveal";
-import { EASE } from "@/lib/anim";
-
-const ROLES = [
-  {
-    tag: "Analytics",
-    title: "Data Analyst",
-    org: "Independent — Remote",
-    status: "Present",
-    desc: "Turning raw business data into dashboards, reports, and decisions across sales, finance, e-commerce, customer, and operations.",
-  },
-  {
-    tag: "Consulting",
-    title: "Data Consultant & BI Analyst",
-    org: "Client Projects",
-    status: "Present",
-    desc: "Designing BI roadmaps, building automated reporting systems, and guiding teams on what to measure — and why it matters.",
-  },
-  {
-    tag: "Education",
-    title: "Data Analytics Trainer",
-    org: "Mides Analytics",
-    status: "Present",
-    desc: "Training students, professionals, and organizations in Data Analytics & Digital Literacy — real skills that open doors.",
-  },
-];
-
-const TOOLBOX = [
-  { name: "SQL", level: 95 },
-  { name: "Power BI", level: 95 },
-  { name: "Excel", level: 94 },
-  { name: "Google Sheets", level: 92 },
-  { name: "Python", level: 88 },
-  { name: "Tableau", level: 84 },
-];
+import { useState } from "react";
+import { EXPERIENCES } from "@/lib/data";
+import { DashboardMock } from "@/components/dashboard-mock";
 
 /**
- * Experience — oversized list rows for the career snapshot (with hover
- * arrow + category pill), followed by an animated "toolbox" proficiency
- * band that fills on scroll.
+ * Experiences timeline — bordered list rows (company, role, date, tags)
+ * with an expandable image gallery on the final row, plus header copy.
  */
 export function Experience() {
+  const [open, setOpen] = useState(false);
+
   return (
-    <section id="experience" className="scroll-mt-24 border-b border-line">
-      <div className="shell py-24 md:py-32">
-        <Reveal>
-          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted">
-            <span className="text-accent">03</span> / Experience
-          </p>
-        </Reveal>
-        <div className="mt-6 flex flex-wrap items-end justify-between gap-6">
-          <Reveal delay={0.1}>
-            <h2 className="font-display text-5xl font-extrabold uppercase leading-[0.92] tracking-tight md:text-7xl">
-              Where I&apos;ve
-              <br />
-              <span className="text-outline">added value</span>
-            </h2>
-          </Reveal>
-          <Reveal delay={0.16}>
-            <p className="max-w-xs pb-2 text-sm leading-relaxed text-muted">
-              Three lanes, one mission: making data work harder for people and
-              businesses.
-            </p>
-          </Reveal>
+    <section className="mx-auto max-w-7xl py-24 px-8 md:px-16">
+      {/* Section header */}
+      <div className="mb-16 flex items-start justify-between">
+        <div>
+          <span className="font-mono text-xs uppercase tracking-widest text-zinc-400">
+            ● Experiences
+          </span>
+          <h2 className="mt-2 text-3xl font-normal tracking-tight md:text-5xl">
+            Explore My Data Journey
+          </h2>
         </div>
+        <p className="hidden max-w-xs text-xs leading-relaxed text-zinc-500 md:block">
+          Over the years, I&apos;ve worked on data projects across sales, finance,
+          e-commerce, and operations — for clients who wanted decisions, not just
+          numbers.
+        </p>
+      </div>
 
-        {/* Role rows */}
-        <div className="mt-14 border-t border-line">
-          {ROLES.map((r, i) => (
-            <Reveal key={r.title} delay={i * 0.06}>
-              <div className="group grid grid-cols-1 items-center gap-4 border-b border-line py-8 transition-colors duration-300 hover:bg-surface/40 md:grid-cols-[60px_1fr_auto] md:gap-8 md:px-4">
-                <span className="font-mono text-xs text-muted">
-                  /0{i + 1}·<span className="text-accent">{r.tag}</span>
-                </span>
-                <div>
-                  <h3 className="font-display text-2xl font-bold tracking-tight transition-transform duration-300 group-hover:translate-x-1 md:text-4xl">
-                    {r.title}
-                  </h3>
-                  <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
-                    {r.org}
-                  </p>
-                  <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
-                    {r.desc}
-                  </p>
-                </div>
-                <div className="flex items-center gap-4 md:flex-col md:items-end">
-                  <span className="flex items-center gap-2 rounded-full border border-line px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-muted">
-                    <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse-dot" />
-                    {r.status}
-                  </span>
-                  <span className="text-2xl text-accent opacity-0 transition-all duration-300 group-hover:opacity-100 md:text-3xl">
-                    ↗
-                  </span>
-                </div>
+      {/* Timeline rows */}
+      <div className="space-y-4">
+        {EXPERIENCES.map((item, idx) => (
+          <div
+            key={idx}
+            className="rounded-xl px-4 pb-6 pt-4 transition hover:bg-zinc-50/60"
+          >
+            <div className="grid grid-cols-1 items-center gap-4 border-b border-zinc-200 pb-6 md:grid-cols-12">
+              <div className="md:col-span-4">
+                <h3 className="text-base font-semibold text-zinc-900">{item.company}</h3>
+                <span className="text-xs text-zinc-400">{item.date}</span>
               </div>
-            </Reveal>
-          ))}
-        </div>
-
-        {/* Toolbox proficiency band */}
-        <div className="mt-20 grid gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <Reveal>
-              <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted">
-                — The toolbox
+              <p className="text-xs leading-relaxed text-zinc-500 md:col-span-5">
+                {item.role}
               </p>
-            </Reveal>
-            <Reveal delay={0.08}>
-              <h3 className="mt-4 font-display text-3xl font-bold tracking-tight md:text-4xl">
-                Tools I reach
-                <br />
-                for daily<span className="text-accent">.</span>
-              </h3>
-            </Reveal>
-          </div>
-          <div className="lg:col-span-8">
-            <div className="flex flex-col gap-6">
-              {TOOLBOX.map((t, i) => (
-                <Reveal key={t.name} delay={i * 0.05}>
-                  <div className="flex items-center gap-4">
-                    <span className="w-40 shrink-0 font-mono text-xs uppercase tracking-[0.15em] text-muted">
-                      {t.name}
-                    </span>
-                    <div className="relative h-2 flex-1 overflow-hidden rounded-full bg-surface-2">
-                      <motion.div
-                        className="absolute inset-y-0 left-0 rounded-full bg-accent"
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${t.level}%` }}
-                        viewport={{ once: true, margin: "-60px" }}
-                        transition={{ duration: 1.2, delay: 0.1, ease: EASE }}
-                      />
-                    </div>
-                    <span className="w-12 shrink-0 text-right font-display text-sm font-bold">
-                      {t.level}%
-                    </span>
-                  </div>
-                </Reveal>
-              ))}
+              <div className="flex justify-start gap-2 md:col-span-3 md:justify-end">
+                {item.tags.map((tag, i) => (
+                  <span
+                    key={i}
+                    className="rounded-full border border-zinc-200 bg-zinc-100 px-3 py-1 text-[10px] text-zinc-600"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
+
+            {/* Expandable gallery on the final row */}
+            {item.hasGallery && (
+              <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
+                <DashboardMock variant="trend" title="Analytics Mindset" chartClassName="h-32" />
+                <DashboardMock variant="donut" title="Patterns & Systems" chartClassName="h-32" />
+                <DashboardMock variant="bars" title="Curiosity First" chartClassName="h-32" />
+                <button
+                  onClick={() => setOpen((v) => !v)}
+                  className="flex h-full min-h-[140px] cursor-pointer items-center justify-center rounded-2xl bg-black text-white transition hover:bg-zinc-800"
+                  aria-expanded={open}
+                >
+                  <span className={`text-xl transition-transform duration-300 ${open ? "rotate-45" : ""}`}>↗</span>
+                </button>
+              </div>
+            )}
           </div>
-        </div>
+        ))}
       </div>
     </section>
   );

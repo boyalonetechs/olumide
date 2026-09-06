@@ -1,27 +1,23 @@
-import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
-import { Marquee } from "@/components/marquee";
 import { About } from "@/components/about";
-import { Services } from "@/components/services";
 import { Experience } from "@/components/experience";
-import { Projects } from "@/components/projects";
+import { Promo } from "@/components/promo";
+import { Portfolio } from "@/components/portfolio";
 import { Insights } from "@/components/insights";
 import { Footer } from "@/components/footer";
+import Carousel from "@/components/carousel";
 
 export default function Home() {
   return (
-    <>
-      <Header />
-      <main id="top">
-        <Hero />
-        <Marquee />
-        <About />
-        <Services />
-        <Experience />
-        <Projects />
-        <Insights />
-      </main>
+    <div className="w-full bg-white font-sans text-zinc-900 antialiased selection:bg-black selection:text-white">
+      <Hero />
+      <About />
+      <Carousel />
+      <Experience />
+      <Promo />
+      <Portfolio />
+      <Insights />
       <Footer />
-    </>
+    </div>
   );
 }
