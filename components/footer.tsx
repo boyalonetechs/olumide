@@ -1,3 +1,7 @@
+"use client";
+
+import { motion } from "framer-motion";
+
 /**
  * Footer / call-to-action — big centered "Got a Vision?" headline,
  * a Book A Call button, and the dark bottom bar with global nav + email.
@@ -6,7 +10,12 @@ export function Footer() {
   return (
     <footer id="contact" className="pb-12 pt-24 text-black">
       {/* CTA */}
-      <div className="mx-auto mb-20 max-w-4xl space-y-6 text-center">
+      <motion.div
+        initial={{ opacity: 0, y: 60 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className="mx-auto mb-20 max-w-4xl space-y-6 text-center"
+      >
         <h2 className="text-3xl font-normal tracking-tight md:text-5xl">
           Got a Vision? Let&apos;s Bring It to Life!
         </h2>
@@ -21,10 +30,15 @@ export function Footer() {
         >
           Book A Call ↗
         </a>
-      </div>
+      </motion.div>
 
       {/* Bottom social bar */}
-      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-8 border-t border-zinc-200 px-10 py-8 md:flex-row md:px-16">
+      <motion.div
+        initial={{ opacity: 0, y: 60 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+        className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-8 border-t border-zinc-200 px-10 py-8 md:flex-row md:px-16"
+      >
         <p className="text-[11px] uppercase tracking-widest text-zinc-400">
           Follow me
         </p>
@@ -102,7 +116,7 @@ export function Footer() {
         >
           olumidedavid375@gmail.com
         </a>
-      </div>
+      </motion.div>
     </footer>
   );
 }

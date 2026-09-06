@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { Globe, ArrowUpRight, Sparkles } from "lucide-react";
 import { Avatar } from "@/components/avatar";
 
@@ -14,7 +17,13 @@ export function About() {
     >
       <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-12">
         {/* LEFT: title + paragraph + decorative arrow */}
-        <div className="flex flex-col justify-between pt-2 lg:col-span-4">
+        <motion.div
+          initial={{ opacity: 0, x: -60 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-10%" }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col justify-between pt-2 lg:col-span-4"
+        >
           <div className="max-w-sm space-y-6">
             <h2 className="text-4xl font-normal tracking-tight text-zinc-900 md:text-5xl">
               About Me
@@ -50,10 +59,16 @@ export function About() {
               />
             </svg>
           </div>
-        </div>
+        </motion.div>
 
         {/* MIDDLE: tall white card — globe metric + portrait */}
-        <div className="flex flex-col justify-between space-y-8 rounded-3xl lg:border border-zinc-100 bg-white py-8 px-2 lg:p-8 lg:shadow-sm lg:col-span-4">
+        <motion.div
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-10%" }}
+          transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col justify-between space-y-8 rounded-3xl lg:border border-zinc-100 bg-white py-8 px-2 lg:p-8 lg:shadow-sm lg:col-span-4"
+        >
           <div className="space-y-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-full border border-zinc-200 bg-zinc-100">
               <Globe className="h-5 w-5 text-zinc-800" strokeWidth={1.5} />
@@ -75,10 +90,16 @@ export function About() {
             alt="Olumide portrait"
             className="aspect-square w-full rounded-2xl bg-zinc-100"
           />
-        </div>
+        </motion.div>
 
         {/* RIGHT: avatar + sparkles bullets */}
-        <div className="flex flex-col justify-between space-y-8 pt-2 lg:col-span-4">
+        <motion.div
+          initial={{ opacity: 0, x: 60 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-10%" }}
+          transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col justify-between space-y-8 pt-2 lg:col-span-4"
+        >
           {/* Top-right square avatar with overlay circle button */}
           <div className="hidden md:flex  justify-start lg:justify-end">
             <div className="group relative h-36 w-36 cursor-pointer overflow-hidden rounded-2xl shadow-sm">
@@ -118,7 +139,7 @@ export function About() {
               </p>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { EXPERIENCES } from "@/lib/data";
 import { DashboardMock } from "@/components/dashboard-mock";
 
@@ -15,26 +16,41 @@ export function Experience() {
     <section className="mx-auto max-w-7xl py-24 px-2 md:px-16">
       {/* Section header */}
       <div className="mb-16 px-4 flex items-start justify-between">
-        <div>
+        <motion.div
+          initial={{ opacity: 0, x: -60 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-10%" }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        >
           <span className="font-mono text-xs uppercase tracking-widest text-zinc-400">
             ● Experiences
           </span>
           <h2 className="mt-2 text-3xl font-normal tracking-tight md:text-5xl">
             Explore My Data Journey
           </h2>
-        </div>
-        <p className="hidden max-w-xs text-xs leading-relaxed text-zinc-500 md:block">
+        </motion.div>
+        <motion.p
+          initial={{ opacity: 0, x: 60 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-10%" }}
+          transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          className="hidden max-w-xs text-xs leading-relaxed text-zinc-500 md:block"
+        >
           Over the years, I&apos;ve worked on data projects across sales, finance,
           e-commerce, and operations — for clients who wanted decisions, not just
           numbers.
-        </p>
+        </motion.p>
       </div>
 
       {/* Timeline rows */}
       <div className="space-y-4">
         {EXPERIENCES.map((item, idx) => (
-          <div
+          <motion.div
             key={idx}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-10%" }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: idx * 0.05 }}
             className="rounded-xl px-4 pb-6 pt-4 transition hover:bg-zinc-50/60"
           >
             <div className="grid grid-cols-1 items-center gap-4 border-b border-zinc-200 pb-6 md:grid-cols-12">
@@ -72,7 +88,7 @@ export function Experience() {
                 </button>
               </div>
             )}
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>

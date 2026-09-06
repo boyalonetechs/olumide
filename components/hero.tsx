@@ -58,7 +58,12 @@ export function Hero() {
       />
 
       {/* Floating capsule navigation — fixed over the viewport */}
-      <header className="fixed inset-x-0 top-3 z-50 flex justify-center md:top-5">
+      <motion.header
+        initial={{ y: -120, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className="fixed inset-x-0 top-3 z-50 flex justify-center md:top-5"
+      >
         <nav className="flex items-center gap-0.5 rounded-full border border-zinc-800 bg-black p-1 text-[11px] text-white shadow-xl sm:text-xs md:p-1.5">
           {NAV.map((item) => {
             const isActive = item.id === activeId;
@@ -94,14 +99,17 @@ export function Hero() {
             );
           })}
         </nav>
-      </header>
+      </motion.header>
 
       {/* Center content — watermark + portrait */}
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center justify-center pb-4 pt-8">
         {/* Giant gradient background typography — desktop watermark */}
-        <h1
+        <motion.h1
           aria-hidden
-          className="pointer-events-none absolute top-85 2xl:top-130 left-1/2 z-0 -translate-x-1/2 hidden md:block select-none text-[15vw] font-black uppercase leading-none tracking-tighter text-transparent opacity-90 md:-translate-y-80 md:text-[16vw]"
+          initial={{ y: 140, opacity: 0 }}
+          animate={{ y: 0, opacity: 0.9 }}
+          transition={{ duration: 1.4, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          className="pointer-events-none absolute top-85 2xl:top-130 left-1/2 z-0 -translate-x-1/2 hidden md:block select-none text-[15vw] font-black uppercase leading-none tracking-tighter text-transparent md:-translate-y-80 md:text-[16vw]"
           style={{
             backgroundImage:
               "linear-gradient(to bottom, #27272a, #18181b, #000)",
@@ -109,12 +117,15 @@ export function Hero() {
           }}
         >
           Olumide
-        </h1>
+        </motion.h1>
 
         {/* Giant gradient typography — mobile, sits above the portrait */}
-        <h1
+        <motion.h1
           aria-hidden
-          className="pointer-events-none translate-y-10 md:translate-y-0     z-0 mx-auto select-none text-center text-[17vw] font-black uppercase leading-none tracking-tighter text-transparent opacity-100 md:hidden"
+          initial={{ y: 140, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1.4, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          className="pointer-events-none md:translate-y-0 z-0 mx-auto select-none text-center text-[17vw] font-black uppercase leading-none tracking-tighter text-transparent md:hidden"
           style={{
             backgroundImage:
               "linear-gradient(to bottom, #27272a, #18181b, #000)",
@@ -122,47 +133,74 @@ export function Hero() {
           }}
         >
           Olumide
-        </h1>
+        </motion.h1>
 
         {/* Centered portrait */}
-        <div className="relative z-10 mt-0 w-full translate-y-20  2xl:translate-y-50 max-w-md md:max-w-lg">
-          <Avatar
-            src="/hero-t.png"
-            alt="Olumide Faleye"
-            className="aspect-[4/4.9] w-full scale-120 xl:scale-110 2xl:scale-125 rounded-2xl  md:bg-transparent"
-          />
-        </div>
+        <motion.div
+          initial={{ y: 120, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.9, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="flex w-full justify-center"
+        >
+          <div className="relative z-10 mt-0 w-full translate-y-20  2xl:translate-y-20 max-w-md md:max-w-lg">
+            <Avatar
+              src="/hero-t.png"
+              alt="Olumide Faleye"
+              className="aspect-[4/4.9] w-full scale-120 xl:scale-110 2xl:scale-125 rounded-2xl  md:bg-transparent"
+            />
+          </div>
+        </motion.div>
 
         {/* Intro copy for mobile — stacked under the portrait */}
         <div className="mt-10 w-full space-y-5 md:hidden">
-          <p className="max-w-[36ch] hidden text-xs font-normal leading-relaxed text-zinc-800">
+          <motion.p
+            initial={{ x: -40, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="max-w-[36ch] text-xs font-normal leading-relaxed text-zinc-800"
+          >
             Hello, I&apos;m{" "}
             <strong className="font-semibold">Olumide Faleye</strong>, a{" "}
             <strong className="font-semibold">Data Analyst</strong>. I transform
             data into smarter decisions and help organizations improve
             performance.
-          </p>
-          <p className="max-w-[36ch] hidden text-xs font-normal leading-relaxed text-zinc-800">
+          </motion.p>
+          <motion.p
+            initial={{ x: 40, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="max-w-[36ch] text-xs font-normal leading-relaxed text-zinc-800"
+          >
             I build interactive dashboards and reports that enable
             decision-makers to understand their business and uncover growth
             opportunities.
-          </p>
+          </motion.p>
         </div>
 
         {/* Split left/right copy blocks */}
         <div className="pointer-events-none absolute inset-x-0 top-1/2 xl:top-120 2xl:top-150 hidden -translate-y-1/2 items-center justify-between px-4 md:flex">
-          <div className="pointer-events-auto max-w-[35%] text-xs font-normal leading-relaxed text-zinc-800 lg:max-w-xs">
+          <motion.div
+            initial={{ x: -80, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="pointer-events-auto max-w-[35%] text-xs font-normal leading-relaxed text-zinc-800 lg:max-w-xs"
+          >
             Hello, I&apos;m{" "}
             <strong className="font-semibold">Olumide Faleye</strong>, a{" "}
             <strong className="font-semibold">Data Analyst</strong>. I transform
             data into smarter decisions and help organizations improve
             performance.
-          </div>
-          <div className="pointer-events-auto max-w-[35%] text-right text-xs font-normal leading-relaxed text-zinc-800 lg:max-w-xs">
+          </motion.div>
+          <motion.div
+            initial={{ x: 80, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="pointer-events-auto max-w-[35%] text-right text-xs font-normal leading-relaxed text-zinc-800 lg:max-w-xs"
+          >
             I build interactive dashboards and reports that enable
             decision-makers to understand their business and uncover growth
             opportunities.
-          </div>
+          </motion.div>
         </div>
       </div>
 

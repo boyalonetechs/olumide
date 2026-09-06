@@ -39,6 +39,7 @@ export default function Carousel() {
   const cardRef = useRef<HTMLDivElement>(null);
   const [activeImg, setActiveImg] = useState<number | null>(null);
   const [sectionHeight, setSectionHeight] = useState(300);
+  const [distance, setDistance] = useState(0);
 
   /* Vertical scroll through the tall section drives the horizontal slide */
   const { scrollYProgress } = useScroll({
@@ -46,12 +47,9 @@ export default function Carousel() {
     offset: ["start start", "end end"],
   });
 
-  const x = useTransform(scrollYProgress, (progress) => {
-    const card = cardRef.current;
-    if (!card) return 0;
-    const distance = Math.max(0, card.scrollWidth - card.clientWidth);
-    return -progress * distance;
-  });
+  /* Cache the slide distance once (not per scroll frame) so the strip
+     doesn't re-measure and jitter while the user is scrolling. */
+  const x = useTransform(scrollYProgress, (progress) => -progress * distance);
 
   /* Size the section so its scrollable distance matches the horizontal
      strip distance exactly (1px vertical = 1px horizontal). That way every
@@ -60,12 +58,13 @@ export default function Carousel() {
     const measure = () => {
       const card = cardRef.current;
       if (!card) return;
-      const distance = Math.max(0, card.scrollWidth - card.clientWidth);
-      setSectionHeight(Math.max(300, distance + window.innerHeight));
+      const d = Math.max(0, card.scrollWidth - card.clientWidth);
+      setDistance(d);
+      setSectionHeight(Math.max(300, d + window.innerHeight));
     };
     measure();
     window.addEventListener("resize", measure);
-    const timer = window.setTimeout(measure, 500);
+    const timer = window.setTimeout(measure, 300);
     return () => {
       window.removeEventListener("resize", measure);
       window.clearTimeout(timer);
@@ -86,21 +85,39 @@ export default function Carousel() {
       <div className="mx-auto max-w-7xl px-6 py-8 md:px-12 md:py-10">
         {/* Hero Section */}
         <main className="mb-16">
-          <span className="mb-6 block text-base font-medium tracking-wide text-gray-800">
+          <motion.span
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-10%" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="mb-6 block text-base font-medium tracking-wide text-gray-800"
+          >
             Explore my Works
-          </span>
+          </motion.span>
 
           <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-12">
             {/* Main Headline Left */}
-            <div className="md:col-span-8 lg:col-span-8">
+            <motion.div
+              initial={{ opacity: 0, x: -60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="md:col-span-8 lg:col-span-8"
+            >
               <h1 className="text-5xl font-extrabold leading-[1.05] tracking-tight md:text-7xl lg:text-[80px]">
                 Data Analyst for a{" "}
                 <span className="text-gray-400">digital age</span>
               </h1>
-            </div>
+            </motion.div>
 
             {/* Bio & CTA Right */}
-            <div className="flex h-full flex-col justify-between pt-2 md:col-span-4 lg:col-span-4">
+            <motion.div
+              initial={{ opacity: 0, x: 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+              className="flex h-full flex-col justify-between pt-2 md:col-span-4 lg:col-span-4"
+            >
               <p className="mb-8 text-base leading-relaxed text-gray-600 md:text-lg">
                 Transforming complex, raw datasets into actionable insights and
                 strategic decisions that drive global business growth.
@@ -110,7 +127,7 @@ export default function Carousel() {
                   Let&apos;s Talk <span>→</span>
                 </button>
               </div>
-            </div>
+            </motion.div>
           </div>
         </main>
 
@@ -119,13 +136,13 @@ export default function Carousel() {
           className="relative"
           style={{ height: sectionHeight }}
         >
-          <div className="sticky top-8 xl:top-16 2xl:top-20 pt-1">
+          <div className="sticky top-0 flex h-screen items-center pt-1">
             <div
               ref={cardRef}
               className="relative h-[500px] w-full lg:h-[550px] 2xl:h-[650px]"
             >
               <motion.div
-                style={{ x }}
+                style={{ x, willChange: "transform" }}
                 className="flex lg:h-140 xl:h-full  items-stretch lg:gap-30 xl:gap-50 2xl:gap-100"
               >
                 {SLIDES.map((slide, i) => (
@@ -142,7 +159,10 @@ export default function Carousel() {
                       <img
                         src={slide.src}
                         alt={slide.alt}
-                        className="h-full w-full object-cover rounded-3xl object-top"
+                        loading="eager"
+                        decoding="async"
+                        draggable={false}
+                        className="h-full w-full object-cover rounded-3xl object-top select-none"
                       />
                       {i === 0 && (
                         <div
