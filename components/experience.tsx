@@ -59,7 +59,7 @@ export function Experience() {
 
             {/* Expandable gallery on the final row */}
             {item.hasGallery && (
-              <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
+              <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-4">
                 <DashboardMock variant="trend" title="Analytics Mindset" chartClassName="h-32" />
                 <DashboardMock variant="donut" title="Patterns & Systems" chartClassName="h-32" />
                 <DashboardMock variant="bars" title="Curiosity First" chartClassName="h-32" />

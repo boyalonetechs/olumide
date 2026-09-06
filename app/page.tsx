@@ -14,9 +14,9 @@ export default function Home() {
       <About />
       <Carousel />
       <Experience />
-      <Promo />
+      {/* <Promo /> */}
       <Portfolio />
-      <Insights />
+      {/* <Insights /> */}
       <Footer />
     </div>
   );

@@ -20,18 +20,18 @@ const SLIDES = [
     src: "/dashboard-preview.jpg",
     alt: "Olumide Faleye - Data Analyst",
   },
-  { src: "/IMG-20260716-WA0020.jpg", alt: "Sales Performance Overview" },
+  { src: "/IMG-20260716-WA0020.jpg", alt: "Sales Performance Overview", link: "https://github.com/Olumidave/Sales-Performance-Profitability-Optimization-Analysis" },
   { src: "/IMG-20260716-WA0017.jpg", alt: "Google Sheets Automation" },
-  { src: "/IMG-20260716-WA0019.jpg", alt: "Payment & Revenue Analysis" },
+  { src: "/IMG-20260716-WA0019.jpg", alt: "Payment & Revenue Analysis", link: "https://github.com/Olumidave/Fraud-detection-Analysis" },
   { src: "/IMG-20260716-WA0021.jpg", alt: "Financial Insights Dashboard" },
-  { src: "/IMG-20260716-WA0012.jpg", alt: "Sales Pipeline Dashboard" },
+  { src: "/IMG-20260716-WA0012.jpg", alt: "Sales Pipeline Dashboard", link: "https://github.com/Olumidave/Enterprise-Sales-Pipeline-Regional-Access-Performance-Analytics" },
   { src: "/IMG-20260716-WA0026.jpg", alt: "Customer & Revenue Insights" },
   { src: "/IMG-20260716-WA0024.jpg", alt: "Business Performance Dashboard" },
-  { src: "/IMG-20260716-WA0013.jpg", alt: "Bank Loan Analysis" },
+  { src: "/IMG-20260716-WA0013.jpg", alt: "Bank Loan Analysis", link: "https://github.com/Olumidave/Credit-Risk-Loan-Performance-Analytics" },
   { src: "/IMG-20260716-WA0023.jpg", alt: "Operations Analytics" },
-  { src: "/IMG-20260716-WA0016.jpg", alt: "Uber Trip Analysis" },
+  { src: "/IMG-20260716-WA0016.jpg", alt: "Uber Trip Analysis", link: "https://github.com/Olumidave/Uber-Trip-Analysis---Urban-Mobility-Demand-Revenue-Optimization--Analysis" },
   { src: "/IMG-20260716-WA0018.jpg", alt: "Customer Churn & LTV" },
-  { src: "/IMG-20260716-WA0025.jpg", alt: "Executive Overview" },
+  { src: "/IMG-20260716-WA0025.jpg", alt: "Executive Overview", link: "https://github.com/Olumidave/Global-B2B-Sales-Pipeline-Analysis" },
 ];
 
 export default function Carousel() {
@@ -81,7 +81,7 @@ export default function Carousel() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white font-sans text-black">
+    <div id="projects" className="min-h-screen bg-white font-sans text-black">
       {/* Container */}
       <div className="mx-auto max-w-7xl px-6 py-8 md:px-12 md:py-10">
         {/* Hero Section */}
@@ -114,7 +114,6 @@ export default function Carousel() {
           </div>
         </main>
 
-        {/* Full-Width Featured Image — pinned horizontal scroller */}
         <section
           ref={sectionRef}
           className="relative"
@@ -123,37 +122,52 @@ export default function Carousel() {
           <div className="sticky top-8 xl:top-16 2xl:top-20 pt-1">
             <div
               ref={cardRef}
-              className="relative h-[500px] w-full md:h-[650px]"
+              className="relative h-[500px] w-full lg:h-[550px] 2xl:h-[650px]"
             >
               <motion.div
                 style={{ x }}
                 className="flex lg:h-140 xl:h-full  items-stretch lg:gap-30 xl:gap-50 2xl:gap-100"
               >
                 {SLIDES.map((slide, i) => (
-                  <button
+                  <div
                     key={`${slide.src}-${i}`}
-                    onClick={() => setActiveImg(i)}
-                    aria-label={`Open ${slide.alt} in full size`}
-                    className="relative h-full w-full flex-shrink-0 cursor-zoom-in rounded-3xl text-left shadow-sm transition hover:brightness-95"
+                    className="relative h-full w-full flex-shrink-0"
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element -- keep provided markup */}
-                    <img
-                      src={slide.src}
-                      alt={slide.alt}
-                      className="h-full w-full object-cover rounded-3xl object-top"
-                    />
-                    {i === 0 && (
-                      <div
-                        aria-hidden
-                        className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t rounded-3xl from-black/30 to-transparent"
+                    <button
+                      onClick={() => setActiveImg(i)}
+                      aria-label={`Open ${slide.alt} in full size`}
+                      className="relative h-full w-full cursor-zoom-in rounded-3xl text-left shadow-sm transition hover:brightness-95"
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element -- keep provided markup */}
+                      <img
+                        src={slide.src}
+                        alt={slide.alt}
+                        className="h-full w-full object-cover rounded-3xl object-top"
                       />
+                      {i === 0 && (
+                        <div
+                          aria-hidden
+                          className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t rounded-3xl from-black/30 to-transparent"
+                        />
+                      )}
+                    </button>
+                    {slide.link && (
+                      <a
+                        href={slide.link}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={`Open ${slide.alt} on GitHub`}
+                        className="absolute right-4 top-4 z-10 flex items-center gap-1 rounded-full bg-black/80 px-3.5 py-1.5 text-[11px] font-medium text-white shadow-lg backdrop-blur-sm transition hover:bg-black"
+                      >
+                        Live ↗
+                      </a>
                     )}
-                  </button>
+                  </div>
                 ))}
               </motion.div>
 
               {/* Progress track */}
-              <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 items-center gap-2">
+              <div className="absolute opacity-0 bottom-5 left-1/2 flex -translate-x-1/2 items-center gap-2">
                 {SLIDES.map((_, i) => (
                   <span
                     key={i}
@@ -202,9 +216,9 @@ export default function Carousel() {
                 className="max-h-full max-w-full rounded-2xl object-contain shadow-2xl"
               />
 
-              <span className="absolute bottom-4 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-black/60 px-4 py-2 text-xs font-medium text-white backdrop-blur-md">
-                {SLIDES[activeImg].alt}
-                <span className="ml-2 font-mono text-[10px] uppercase tracking-wider text-white/60">
+              <span className="absolute bottom-4 left-1/2 flex max-w-[calc(100vw-3rem)] -translate-x-1/2 items-center gap-2 truncate whitespace-nowrap rounded-full bg-black/60 px-4 py-2 text-xs font-medium text-white backdrop-blur-md">
+                <span className="truncate">{SLIDES[activeImg].alt}</span>
+                <span className="shrink-0 font-mono text-[10px] uppercase tracking-wider text-white/60">
                   {activeImg + 1} / {SLIDES.length}
                 </span>
               </span>
