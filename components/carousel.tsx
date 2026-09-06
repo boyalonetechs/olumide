@@ -41,6 +41,18 @@ export default function Carousel() {
   const [sectionHeight, setSectionHeight] = useState(300);
   const [distance, setDistance] = useState(0);
 
+  /* Mobile-first: the pinned horizontal scroll plus the slide-in header
+     are desktop-only. Small screens get a plain stacked gallery instead. */
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
   /* Vertical scroll through the tall section drives the horizontal slide */
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -86,9 +98,9 @@ export default function Carousel() {
         {/* Hero Section */}
         <main className="mb-16">
           <motion.span
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-10%" }}
+            initial={isMobile ? { opacity: 1 } : { opacity: 0, y: 30 }}
+            whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
+            viewport={isMobile ? undefined : { once: true, margin: "-10%" }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="mb-6 block text-base font-medium tracking-wide text-gray-800"
           >
@@ -98,9 +110,9 @@ export default function Carousel() {
           <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-12">
             {/* Main Headline Left */}
             <motion.div
-              initial={{ opacity: 0, x: -60 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
+              initial={isMobile ? { opacity: 1 } : { opacity: 0, x: -60 }}
+              whileInView={isMobile ? undefined : { opacity: 1, x: 0 }}
+              viewport={isMobile ? undefined : { once: true, margin: "-10%" }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="md:col-span-8 lg:col-span-8"
             >
@@ -112,9 +124,9 @@ export default function Carousel() {
 
             {/* Bio & CTA Right */}
             <motion.div
-              initial={{ opacity: 0, x: 60 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
+              initial={isMobile ? { opacity: 1 } : { opacity: 0, x: 60 }}
+              whileInView={isMobile ? undefined : { opacity: 1, x: 0 }}
+              viewport={isMobile ? undefined : { once: true, margin: "-10%" }}
               transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
               className="flex h-full flex-col justify-between pt-2 md:col-span-4 lg:col-span-4"
             >
@@ -133,7 +145,7 @@ export default function Carousel() {
 
         <section
           ref={sectionRef}
-          className="relative"
+          className="relative hidden md:block"
           style={{ height: sectionHeight }}
         >
           <div className="sticky top-0 flex h-screen items-center pt-1">
@@ -199,6 +211,43 @@ export default function Carousel() {
             </div>
           </div>
         </section>
+
+        {/* Mobile: plain stacked gallery (no horizontal pinning) */}
+        <div className="space-y-6 md:hidden">
+          {SLIDES.map((slide, i) => (
+            <div
+              key={`${slide.src}-${i}`}
+              className="relative overflow-hidden rounded-3xl shadow-sm"
+            >
+              <button
+                onClick={() => setActiveImg(i)}
+                aria-label={`Open ${slide.alt} in full size`}
+                className="relative block w-full cursor-zoom-in text-left"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element -- keep provided markup */}
+                <img
+                  src={slide.src}
+                  alt={slide.alt}
+                  loading="lazy"
+                  decoding="async"
+                  draggable={false}
+                  className="aspect-[4/3] w-full select-none object-cover object-top"
+                />
+              </button>
+              {slide.link && (
+                <a
+                  href={slide.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`Open ${slide.alt} on GitHub`}
+                  className="absolute right-4 top-4 z-10 flex items-center gap-1 rounded-full bg-black/80 px-3.5 py-1.5 text-[11px] font-medium text-white shadow-lg backdrop-blur-sm transition hover:bg-black"
+                >
+                  Live ↗
+                </a>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Full-image modal */}
