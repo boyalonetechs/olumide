@@ -33,8 +33,8 @@ export function Hero() {
         className="pointer-events-none absolute inset-0 bg-grid opacity-80 [background-size:56px_56px] "
       />
 
-      {/* Floating capsule navigation */}
-      <header className="relative z-30 flex justify-center pt-0">
+      {/* Floating capsule navigation — fixed over the viewport */}
+      <header className="fixed inset-x-0 top-3 z-50 flex justify-center md:top-5">
         <nav className="flex items-center gap-0.5 rounded-full border border-zinc-800 bg-black p-1.5 text-xs text-white shadow-xl">
           {NAV.map((item) => (
             <a
