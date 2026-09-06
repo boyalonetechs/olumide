@@ -12,9 +12,9 @@ export function Experience() {
   const [open, setOpen] = useState(false);
 
   return (
-    <section className="mx-auto max-w-7xl py-24 px-8 md:px-16">
+    <section className="mx-auto max-w-7xl py-24 px-2 md:px-16">
       {/* Section header */}
-      <div className="mb-16 flex items-start justify-between">
+      <div className="mb-16 px-4 flex items-start justify-between">
         <div>
           <span className="font-mono text-xs uppercase tracking-widest text-zinc-400">
             ● Experiences

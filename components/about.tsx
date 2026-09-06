@@ -80,7 +80,7 @@ export function About() {
         {/* RIGHT: avatar + sparkles bullets */}
         <div className="flex flex-col justify-between space-y-8 pt-2 lg:col-span-4">
           {/* Top-right square avatar with overlay circle button */}
-          <div className="flex justify-start lg:justify-end">
+          <div className="hidden md:flex  justify-start lg:justify-end">
             <div className="group relative h-36 w-36 cursor-pointer overflow-hidden rounded-2xl shadow-sm">
               <Avatar
                 src="/background.jpg"
